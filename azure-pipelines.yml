@@ -1,7 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# -------------------------------------
+# updated at: 15/03/2023
+# created by: Cristobal Miranda
+# -------------------------------------
 
 trigger:
 - main
@@ -10,17 +10,33 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Npm@1
-  inputs:
-    command: 'install'
-    verbose: true
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run cy:report'
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TEST-*.xml'
+
+# trigger:
+# - main
+
+# pool:
+#   vmImage: ubuntu-latest
+
+# steps:
+# - task: Npm@1
+#   inputs:
+#     command: 'install'
+#     verbose: true
+
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run cy:report'
+
+# - task: PublishTestResults@2
+#   inputs:
+#     testResultsFormat: 'JUnit'
+#     testResultsFiles: '**/TEST-*.xml'
