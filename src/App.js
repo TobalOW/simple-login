@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 
 import "./styles.css";
 
@@ -12,17 +11,17 @@ function App() {
   const database = [
     {
       username: "user1",
-      password: "pass1"
+      password: "pass1",
     },
     {
       username: "user2",
-      password: "pass2"
-    }
+      password: "pass2",
+    },
   ];
 
   const errors = {
     uname: "invalid username",
-    pass: "invalid password"
+    pass: "invalid password",
   };
 
   const handleSubmit = (event) => {
@@ -51,7 +50,9 @@ function App() {
   // Generate JSX code for error message
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
+      <div className="error">
+        <p data-cy="errorMsg">{errorMessages.message}</p>
+      </div>
     );
 
   // JSX code for login form
@@ -60,16 +61,21 @@ function App() {
       <form onSubmit={handleSubmit}>
         <div className="input-container">
           <label>Username </label>
-          <input id="inputTextName" type="text" name="uname" required />
+          <input data-cy="inputTextName" type="text" name="uname" required />
           {renderErrorMessage("uname")}
         </div>
         <div className="input-container">
           <label>Password </label>
-          <input id="inputTextPassword" type="password" name="pass" required />
+          <input
+            data-cy="inputTextPassword"
+            type="password"
+            name="pass"
+            required
+          />
           {renderErrorMessage("pass")}
         </div>
         <div className="button-container">
-          <input id="inputSubmit" type="submit" />
+          <input data-cy="inputSubmit" type="submit" />
         </div>
       </form>
     </div>
@@ -79,7 +85,13 @@ function App() {
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {isSubmitted ? (
+          <div>
+            <p data-cy="loggedUser">User is successfully logged in</p>
+          </div>
+        ) : (
+          renderForm
+        )}
       </div>
     </div>
   );

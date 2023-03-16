@@ -15,7 +15,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cy:report:e2e": "npx cypress run --e2e --reporter junit",
+    "cy:report:comp": "npx cypress run --component --reporter junit"
+
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^12.8.0"
   }
 }
