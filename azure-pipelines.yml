@@ -32,7 +32,7 @@ steps:
     Contents: |
       !node_modules
       !.git/**/*
-      cypress/*
+      **/cypress/
     TargetFolder: "$(Build.ArtifactStagingDirectory)"
     cleanTargetFolder: true
 
