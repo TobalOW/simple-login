@@ -24,3 +24,14 @@ steps:
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/test-*.xml'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run cy:report:e2e'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-*.xml'
+       
