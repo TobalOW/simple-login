@@ -30,8 +30,7 @@ steps:
   inputs:
     SourceFolder: "$(Build.SourcesDirectory)"
     Contents: |
-      cypress/videos
-      cypress/screenshots
+      **/*
     TargetFolder: "$(Build.ArtifactStagingDirectory)"
     cleanTargetFolder: true
 
