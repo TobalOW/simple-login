@@ -16,8 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cy:report:e2e": "npx cypress run --e2e --reporter junit",
-    "cy:report:comp": "npx cypress run --component --reporter junit"
+    "cy:report:e2e": "npx cypress run --e2e --reporter junit --reporter-options mochaFile=test-results-e2e.xml",
+    "cy:report:comp": "npx cypress run --component --reporter junit --reporter-options mochaFile=test-results-comp.xml"
 
   },
   "eslintConfig": {
