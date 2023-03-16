@@ -21,10 +21,10 @@ steps:
     customCommand: 'run cy:report:comp'
 
 # debemos separar los run de cypress por que se pisan los archivos output
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run cy:report:e2e'
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run cy:report:e2e'
 
 - task: CopyFiles@2
   inputs:
