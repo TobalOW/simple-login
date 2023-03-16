@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 steps:
 - task: Npm@1
@@ -20,15 +20,35 @@ steps:
     command: 'custom'
     customCommand: 'run cy:report:comp'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/test-*.xml'
-
+# debemos separar los run de cypress por que se pisan los archivos output
 - task: Npm@1
   inputs:
     command: 'custom'
     customCommand: 'run cy:report:e2e'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: "$(Build.SourcesDirectory)"
+    Contents: |
+      cypress/videos
+      cypress/screenshots
+    TargetFolder: "$(Build.ArtifactStagingDirectory)"
+    cleanTargetFolder: true
+
+- task: ArchiveFiles@2
+  displayName: 'Archive files'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: "$(Build.ArtifactStagingDirectory)/simple-test.zip"
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)/simple-test.zip"
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
 - task: PublishTestResults@2
   inputs:
