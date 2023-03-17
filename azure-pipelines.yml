@@ -41,9 +41,7 @@ steps:
   inputs:
     SourceFolder: "$(Build.SourcesDirectory)"
     Contents: |
-      **/*
-      !.git/**/*
-      !node_modules/**/*
+      cypress/**/*
     TargetFolder: "$(Build.ArtifactStagingDirectory)"
     cleanTargetFolder: true
 
