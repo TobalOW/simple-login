@@ -26,42 +26,92 @@ pool:
 #     customCommand: 'run cy:report:e2e'
 steps:
 
-- task: NodeTool@0
-  inputs:
-    versionSource: 'spec'
-    versionSpec: '14.x'
-  displayName: "Install Node.js"
+- stage: Testing front
+  displayName: Testing
+  jobs:
+    - job: e2e
+      displayName: Running e2e
+      steps:
+        - task: NodeTool@0
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '14.x'
+          displayName: "Install Node.js"
 
-- script: |
-    npm install
-    npm run cy:report:e2e
-  displayName: "npm install and Run Cypress"
+        - script: |
+            npm install
+            npm run cy:report:e2e
+          displayName: "npm install and Run Cypress"
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: "$(Build.SourcesDirectory)"
-    Contents: |
-      cypress/**/*
-    TargetFolder: "$(Build.ArtifactStagingDirectory)"
-    cleanTargetFolder: true
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: "$(Build.SourcesDirectory)"
+            Contents: |
+              cypress/videos/**/*
+              cypress/screenshots/**/*
+            TargetFolder: "$(Build.ArtifactStagingDirectory)"
+            cleanTargetFolder: true
 
-- task: ArchiveFiles@2
-  displayName: 'Archive files'
-  inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: "$(Build.ArtifactStagingDirectory)/simple-test.zip"
-    replaceExistingArchive: true
+        - task: ArchiveFiles@2
+          displayName: 'Archive files'
+          inputs:
+            rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: "$(Build.ArtifactStagingDirectory)/e2e-test-videos.zip"
+            replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: "$(Build.ArtifactStagingDirectory)/simple-test.zip"
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: "$(Build.ArtifactStagingDirectory)/e2e-test-videos.zip"
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/test-*.xml'
+        - task: PublishTestResults@2
+          inputs:
+            testResultsFormat: 'JUnit'
+            testResultsFiles: '**/test-*.xml'
+  
+    - job: component
+      displayName: Running component
+      steps:
+        - task: NodeTool@0
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '14.x'
+          displayName: "Install Node.js"
+
+        - script: |
+            npm install
+            npm run cy:report:comp
+          displayName: "npm install and Run Cypress"
+
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: "$(Build.SourcesDirectory)"
+            Contents: |
+              cypress/videos/**/*
+              cypress/screenshots/**/*
+            TargetFolder: "$(Build.ArtifactStagingDirectory)"
+            cleanTargetFolder: true
+
+        - task: ArchiveFiles@2
+          displayName: 'Archive files'
+          inputs:
+            rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: "$(Build.ArtifactStagingDirectory)/component-test-videos.zip"
+            replaceExistingArchive: true
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: "$(Build.ArtifactStagingDirectory)/component-test-videos.zip"
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
+
+        - task: PublishTestResults@2
+          inputs:
+            testResultsFormat: 'JUnit'
+            testResultsFiles: '**/test-*.xml'
        
