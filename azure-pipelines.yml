@@ -31,9 +31,7 @@ steps:
     SourceFolder: "$(Build.SourcesDirectory)"
     Contents: |
       **/*
-      !node_modules
-      !**/node_modules
-      !**/.git
+      !.git/**/*
     TargetFolder: "$(Build.ArtifactStagingDirectory)"
     cleanTargetFolder: true
 
