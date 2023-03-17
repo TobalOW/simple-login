@@ -15,16 +15,16 @@ steps:
     command: 'install'
     verbose: true
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run cy:report:comp'
-
-# debemos separar los run de cypress por que se pisan los archivos output
 # - task: Npm@1
 #   inputs:
 #     command: 'custom'
-#     customCommand: 'run cy:report:e2e'
+#     customCommand: 'run cy:report:comp'
+
+# se debe separar los run de cypress por que se pisan los archivos output
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run cy:report:e2e'
 
 - task: CopyFiles@2
   inputs:
